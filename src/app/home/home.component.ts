@@ -67,16 +67,15 @@ gender!:string
 searchString!:string
 name!:string
 status!:string
-form!:FormGroup
+
   data:any=[]
 constructor(
   private characterService:CharactersService,
-  private formBuilder:FormBuilder,
   private toastr:ToastrService,
 ){}
 
   ngOnInit(): void {
-    this.createForm()
+    
     this.getAll()
   }
 
@@ -107,11 +106,5 @@ constructor(
     this.data=this.data.filter((data:any)=>data.gender==gender)
     this.gender=""
   }
-  createForm(){
-    this.form=this.formBuilder.group({
-      status:[""],
-      gender:[""],
-      name:[""],
-    })
-  }
+  
 }
