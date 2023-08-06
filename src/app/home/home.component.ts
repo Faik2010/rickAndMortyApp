@@ -1,6 +1,8 @@
 import { Component, OnInit } from '@angular/core';
 import { CharactersService } from '../services/characters.service';
 import { responseModel } from '../models/responseModel';
+import { FormGroup,FormBuilder } from '@angular/forms';
+import { ToastrService } from 'ngx-toastr';
 
 @Component({
   selector: 'app-home',
@@ -46,18 +48,35 @@ export class HomeComponent implements OnInit {
     type: '',
     url: ''
   }
+  genders=[
+    "Male",
+    "Female",
+    "Genderless",
+    "unknown"
+  ]
+  statuses=[
+    "Dead",
+    "Alive",
+    "unknown"
+  ]
 page=1
 currentPage=4
 pageSize=20
 total!:number
-gender:string="Male"
+gender!:string
 searchString!:string
+name!:string
+status!:string
+form!:FormGroup
   data:any=[]
 constructor(
-  private characterService:CharactersService
+  private characterService:CharactersService,
+  private formBuilder:FormBuilder,
+  private toastr:ToastrService,
 ){}
 
   ngOnInit(): void {
+    this.createForm()
     this.getAll()
   }
 
@@ -65,15 +84,8 @@ constructor(
     this.characterService.getAll(this.page).subscribe((res)=>{
      this.total=res.info.count
       this.data=res.results
-      // this.page++;
-//  for (this.page; this.page<=res.info.pages; this.page++) {
-//   this.characterService.getAll(this.page).subscribe((res)=>{
-//     this.data.push(res.results)
+ 
     
-//   })
-  
-//     } 
-    console.log(this.data)
     })
    
   }
@@ -81,10 +93,25 @@ constructor(
     this.page=event
     this.getAll()
   }
+  getFilteredData(){
+    this.characterService.filterData(this.page, this.status, this.gender).subscribe((res)=>{
+      this.total=res.info.count
+      this.data=res.results
+    },(err)=>{
+      this.toastr.error(err.error.error)
+    })
+  }
 
   filterData(gender:string){
     gender=this.gender
     this.data=this.data.filter((data:any)=>data.gender==gender)
     this.gender=""
+  }
+  createForm(){
+    this.form=this.formBuilder.group({
+      status:[""],
+      gender:[""],
+      name:[""],
+    })
   }
 }

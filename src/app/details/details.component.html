@@ -1,0 +1,25 @@
+<div class="row">
+    <div *ngIf="responseModel.image"  class="card" style="width: 36rem;">
+        <img class="card-img-top" src="{{responseModel.image}}" alt="Card image cap">
+        <div class="card-body">
+          <h5 class="card-title text-center" ><b>Name: </b>{{responseModel.name}}</h5>
+          
+          <div class="row">
+            <div class="col-md-6">
+                <p class="card-text"><b>Status: </b>{{responseModel.status}}</p>
+                <p class="card-text"><b>Specy: </b>{{responseModel.species}}</p>
+                <p class="card-text"><b>Gender: </b>{{responseModel.gender}}</p>
+                <p class="card-text"><b>Creation: </b>{{responseModel.created | date:'dd.MM.yyyy'}}</p>
+            </div>
+            <div class="col-md-6">
+                <p class="card-text"><b>Episodes: </b>{{responseModel.episode.length}}</p>
+                <p class="card-text"><b>Location: </b>{{responseModel.location.name}}</p>
+                <p class="card-text"><b>Origin: </b>{{responseModel.origin.name}}</p>
+                <p class="card-text"><b>Type: </b>{{responseModel.type}}</p>
+            </div>
+          </div>
+         <button class="btn btn-outline-success" (click)="backToHome()">Go Back</button>
+        </div>
+      </div>
+      
+  </div>
