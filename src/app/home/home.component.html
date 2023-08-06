@@ -46,7 +46,7 @@
     </div>
   </nav>
   <div class="row">
-    <div *ngFor="let item of data | search:searchString" class="card" style="width: 18rem;">
+    <div *ngFor="let item of data | paginate:{itemsPerPage:20, currentPage:page,totalItems:total} | search:searchString" class="card" style="width: 18rem;">
         <img class="card-img-top" src="{{item.image}}" alt="Card image cap">
         <div class="card-body">
           <h5 class="card-title" ngbTooltip={{item.name}}><b>Name: </b>{{item.name|slice:0:12}}</h5>
@@ -55,7 +55,7 @@
           <a href="#" class="btn btn-outline-primary pull-right">Details</a>
         </div>
       </div>
-      
+      <pagination-controls (pageChange)="pageChange($event)"></pagination-controls>
   </div>
 
   

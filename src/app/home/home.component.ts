@@ -46,9 +46,10 @@ export class HomeComponent implements OnInit {
     type: '',
     url: ''
   }
-page=3
+page=1
 currentPage=4
 pageSize=20
+total!:number
 gender:string="Male"
 searchString!:string
   data:any=[]
@@ -62,7 +63,7 @@ constructor(
 
   getAll(){
     this.characterService.getAll(this.page).subscribe((res)=>{
-     
+     this.total=res.info.count
       this.data=res.results
       // this.page++;
 //  for (this.page; this.page<=res.info.pages; this.page++) {
@@ -75,6 +76,10 @@ constructor(
     console.log(this.data)
     })
    
+  }
+  pageChange(event:number){
+    this.page=event
+    this.getAll()
   }
 
   filterData(gender:string){

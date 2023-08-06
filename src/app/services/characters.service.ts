@@ -17,4 +17,8 @@ export class CharactersService {
     let api= this.apiUrl + "character/?page=" + page
     return this.httpClient.get<responseModel>(api)
   }
+  filterData(page:number,name:string,status:string,gender:string):Observable<responseModel>{
+    let api = this.apiUrl + "character/?page=" + page + "&name" + name + "&status=" + status + "&gender=" + gender
+    return this.httpClient.get<responseModel>(api)
+  }
 }
